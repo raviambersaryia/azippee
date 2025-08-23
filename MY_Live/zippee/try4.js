@@ -1580,3 +1580,14 @@ function getOrderAttainment(actualOrders, projectedOrders) {
   if (!projectedOrders || projectedOrders === 0) return "0%";
   return ((actualOrders / projectedOrders) * 100).toFixed(2) + "%";
 }
+
+// Find the correct Projected Orders till [hour] value
+    // This is usually the second column after store name in projectionData
+    let projectedOrdersTillHour = projectionData[store] ? parseInt(projectionData[store][1]) || 0 : 0; // [1] is "Projected Orders | till [hour]"
+    let totalOrders = summaryData[store] ? parseInt(summaryData[store][0]) || 0 : 0; // [0] is "Total Orders"
+
+    // Calculate Order Attainment %
+    let orderAttainment = projectedOrdersTillHour ? ((totalOrders / projectedOrdersTillHour) * 100).toFixed(2) : "0.00";
+
+    // Add to table row
+    mergedHTML += `<td>${orderAttainment}%</td>`;
